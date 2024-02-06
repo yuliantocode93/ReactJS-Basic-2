@@ -1,30 +1,31 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function App() {
+  const headingRef = useRef();
+  const imputRef = useRef();
   const [lokasi, setLokasi] = useState("Jakarta");
-  const [lokasiLain, setLokasiLain] = useState("bogor");
-  // console.log("lokasi === ", lokasi);
 
   useEffect(() => {
     console.log("lokasi === ", lokasi);
-  }, [lokasi, lokasiLain]);
+    console.log("heading", headingRef.current);
+    headingRef.current.textContent = `Saya ingin ke jawa`;
 
-  useEffect(() => {
-    console.log("lokasi lain === ", lokasiLain);
-  }, []);
+    console.log("h1 height === ", headingRef.current.clientHeight);
+    console.log("h1 className === ", headingRef.current.className);
+    console.log("h1 ID === ", headingRef.current.id);
+  }, [lokasi]);
 
   return (
     <div className="App">
-      <h1>Saya ingin ke {lokasi}</h1>
-      <button onClick={() => setLokasi("Bandung")}>Bandung</button>
-      <button onClick={() => setLokasi("Kuta")}>Kuta</button>
+      <h1 id="ini-h1" className="ini-class-name" ref={headingRef}>
+        Saya ingin ke {lokasi}
+      </h1>
 
       <hr />
 
-      <h1>Lokasi lain : {lokasiLain}</h1>
-      <button onClick={() => setLokasiLain("bali")}>Bali</button>
-      <button onClick={() => setLokasiLain("jakarta")}>Jakarta</button>
+      <input ref={imputRef} />
+      <button onClick={() => imputRef.current.focus()}>Focus</button>
     </div>
   );
 }
