@@ -2,40 +2,34 @@ import "./App.css";
 import { useState, useEffect, useRef } from "react";
 
 function App() {
-  const [nama, setNama] = useState("");
-  useEffect(() => {
-    console.log("Nama yang di inputkan: ", nama);
-    if (nama.length < 3) {
-      console.error("harus lebih dari 2 huruf");
-    }
-  }, [nama]);
+  const [profile, setProfile] = useState(null);
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const formJSON = Object.fromEntries(formData.entries());
-    console.log(formJSON);
+  const fetchDataProfile = async () => {
+    const response = await fetch("https://api.github.com/users/yuliantocode93");
+    const data = await response.json();
+    setProfile(data);
   };
+  useEffect(() => {
+    // fetch("https://api.github.com/users/yuliantocode93")
+    //   .then((response) => response.json())
+    //   .then((data) => setProfile(data));
 
+    fetchDataProfile();
+  }, []);
+
+  if (!profile) {
+    return "Loading...";
+  }
   return (
     <div className="App">
-      <h1>Form React</h1>
+      <h1>Data Fetching</h1>
 
       <hr />
-
-      <form className="form" onSubmit={onSubmit}>
-        <div>
-          <label htmlFor="nama">Name Siswa</label>
-          <input id="nama" value={nama} onChange={(e) => setNama(e.target.value)} />
-          <div>Nama yang di input adalah {nama}</div>
-          {nama.length > 0 && nama.length < 3 && (
-            <div className="error" style={{ color: "red" }}>
-              nama tidak boleh kurang dari 3
-            </div>
-          )}
-        </div>
-      </form>
+      <div>nama : {profile.name}</div>
+      <div>
+        <img src={profile.avatar_url} />
+      </div>
+      <div>lokasi : {profile.location}</div>
     </div>
   );
 }
