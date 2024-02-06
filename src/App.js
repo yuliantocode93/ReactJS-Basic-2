@@ -1,20 +1,16 @@
 import "./App.css";
+import Content from "./components/global/Content";
+import Footer from "./components/global/Footer";
+import Header from "./components/global/Header";
 
-function Item({ name, isPacked }) {
-  let itemName = name;
-  if (isPacked) itemName = ` ${name}✔`;
-  return <li className="item">{itemName}</li>;
-}
-
-export default function PackingList() {
+function App() {
   return (
     <section>
-      <h1>Sally Ride's Packing List</h1>
-      <ul>
-        <Item isPacked={true} name="Space suit" />
-        <Item isPacked={true} name="Helmet with a golden leaf" />
-        <Item isPacked={false} name="Photo of Tam" />
-      </ul>
+      <Header />
+      <Content />
+      <Footer />
     </section>
   );
 }
+
+export default App;
