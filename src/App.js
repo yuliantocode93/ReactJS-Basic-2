@@ -1,38 +1,30 @@
 import "./App.css";
+import { useState, useEffect } from "react";
 
-function App({ library }) {
-  const onSubmit = () => {
-    console.log("click");
-  };
+function App() {
+  const [lokasi, setLokasi] = useState("Jakarta");
+  const [lokasiLain, setLokasiLain] = useState("bogor");
+  // console.log("lokasi === ", lokasi);
 
-  const data = {
-    nama: "made",
-    alamat: "bali",
-    sekolah: {
-      nama: "SMA 1 Bali",
-      alamat: "badung",
-    },
-  };
+  useEffect(() => {
+    console.log("lokasi === ", lokasi);
+  }, [lokasi, lokasiLain]);
 
-  const {
-    nama,
-    alamat,
-    sekolah: { nama: namaSekolah, alamat: alamatSekolah },
-  } = data;
-  console.log({ nama, alamat, namaSekolah, alamatSekolah });
-
-  const array = ["badung", "denpasar", "bedugul", "uluwatu", "canggu"];
-  console.log(array);
-
-  const [lokasiSatu, lokasiDua, ...sisa] = array;
-  console.log("lokasiSatu === ", lokasiSatu);
-  console.log("lokasiSatu === ", lokasiDua);
-  console.log("lokasiDua === ", sisa);
+  useEffect(() => {
+    console.log("lokasi lain === ", lokasiLain);
+  }, []);
 
   return (
     <div className="App">
-      <h1>Belajar {library}</h1>
-      <button onClick={onSubmit}>Submit</button>
+      <h1>Saya ingin ke {lokasi}</h1>
+      <button onClick={() => setLokasi("Bandung")}>Bandung</button>
+      <button onClick={() => setLokasi("Kuta")}>Kuta</button>
+
+      <hr />
+
+      <h1>Lokasi lain : {lokasiLain}</h1>
+      <button onClick={() => setLokasiLain("bali")}>Bali</button>
+      <button onClick={() => setLokasiLain("jakarta")}>Jakarta</button>
     </div>
   );
 }
