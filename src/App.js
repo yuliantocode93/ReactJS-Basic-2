@@ -1,37 +1,20 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
 
-function App() {
-  const [profile, setProfile] = useState(null);
-
-  const fetchDataProfile = async () => {
-    const response = await fetch("https://api.github.com/users/yuliantocode93");
-    const data = await response.json();
-    setProfile(data);
-  };
-  useEffect(() => {
-    // fetch("https://api.github.com/users/yuliantocode93")
-    //   .then((response) => response.json())
-    //   .then((data) => setProfile(data));
-
-    fetchDataProfile();
-  }, []);
-
-  if (!profile) {
-    return "Loading...";
-  }
-  return (
-    <div className="App">
-      <h1>Data Fetching</h1>
-
-      <hr />
-      <div>nama : {profile.name}</div>
-      <div>
-        <img src={profile.avatar_url} />
-      </div>
-      <div>lokasi : {profile.location}</div>
-    </div>
-  );
+function Item({ name, isPacked }) {
+  let itemName = name;
+  if (isPacked) itemName = ` ${name}✔`;
+  return <li className="item">{itemName}</li>;
 }
 
-export default App;
+export default function PackingList() {
+  return (
+    <section>
+      <h1>Sally Ride's Packing List</h1>
+      <ul>
+        <Item isPacked={true} name="Space suit" />
+        <Item isPacked={true} name="Helmet with a golden leaf" />
+        <Item isPacked={false} name="Photo of Tam" />
+      </ul>
+    </section>
+  );
+}
