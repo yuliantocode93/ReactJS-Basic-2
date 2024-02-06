@@ -2,30 +2,40 @@ import "./App.css";
 import { useState, useEffect, useRef } from "react";
 
 function App() {
-  const headingRef = useRef();
-  const imputRef = useRef();
-  const [lokasi, setLokasi] = useState("Jakarta");
-
+  const [nama, setNama] = useState("");
   useEffect(() => {
-    console.log("lokasi === ", lokasi);
-    console.log("heading", headingRef.current);
-    headingRef.current.textContent = `Saya ingin ke jawa`;
+    console.log("Nama yang di inputkan: ", nama);
+    if (nama.length < 3) {
+      console.error("harus lebih dari 2 huruf");
+    }
+  }, [nama]);
 
-    console.log("h1 height === ", headingRef.current.clientHeight);
-    console.log("h1 className === ", headingRef.current.className);
-    console.log("h1 ID === ", headingRef.current.id);
-  }, [lokasi]);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const formJSON = Object.fromEntries(formData.entries());
+    console.log(formJSON);
+  };
 
   return (
     <div className="App">
-      <h1 id="ini-h1" className="ini-class-name" ref={headingRef}>
-        Saya ingin ke {lokasi}
-      </h1>
+      <h1>Form React</h1>
 
       <hr />
 
-      <input ref={imputRef} />
-      <button onClick={() => imputRef.current.focus()}>Focus</button>
+      <form className="form" onSubmit={onSubmit}>
+        <div>
+          <label htmlFor="nama">Name Siswa</label>
+          <input id="nama" value={nama} onChange={(e) => setNama(e.target.value)} />
+          <div>Nama yang di input adalah {nama}</div>
+          {nama.length > 0 && nama.length < 3 && (
+            <div className="error" style={{ color: "red" }}>
+              nama tidak boleh kurang dari 3
+            </div>
+          )}
+        </div>
+      </form>
     </div>
   );
 }
